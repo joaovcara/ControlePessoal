@@ -4,6 +4,7 @@ BEGIN
         Id                   INT PRIMARY KEY IDENTITY(1,1),
         Codigo               VARCHAR(3) NOT NULL,
         Descricao            VARCHAR(200) NOT NULL,
-        NMLogo               VARCHAR(200)
+        NMLogo               VARCHAR(200),
+        Cor                  VARCHAR(200)
     );
 END;

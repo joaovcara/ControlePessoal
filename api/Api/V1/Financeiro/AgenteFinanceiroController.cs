@@ -57,5 +57,12 @@ namespace Api.Controllers
 
             return Ok(agenteFinanceiro);
         }
+
+        [HttpGet("getBancos")]
+        public async Task<IActionResult> GetBancos()
+        {
+            var bancos = await _agenteFinanceiroService.GetBancosAsync();
+            return Ok(bancos);
+        }
     }
 }

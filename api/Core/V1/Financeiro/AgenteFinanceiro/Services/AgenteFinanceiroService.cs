@@ -37,5 +37,10 @@ namespace Core.V1.Financeiro.AgenteFinanceiro.Services
         {
             return await _agenteFinanceiroRepository.GetAllAsync();
         }
+
+        public async Task<IEnumerable<BancooModel>> GetBancosAsync()
+        {
+            return await _agenteFinanceiroRepository.GetBancoAsync();
+        }
     }
 }

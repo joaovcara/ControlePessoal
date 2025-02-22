@@ -9,5 +9,6 @@ namespace Core.V1.Financeiro.AgenteFinanceiro.Interfaces.Services
         Task<int> DeleteAsync(int id);
         Task<AgenteFinanceiroModel> GetByIdAsync(int id);
         Task<IEnumerable<AgenteFinanceiroModel>> GetAllAsync();
+        Task<IEnumerable<BancooModel>> GetBancosAsync();
     }
 }

@@ -23,6 +23,8 @@ import Perfil from "../Pages/Perfil/Perfil";
 import Configuracoes from "../Pages/Configuracoes/Configuracoes";
 import Dashboard from "../Pages/Dashboard/Dashboard";
 import ResetPasswordPage from "../Pages/Login/ResetPassword";
+import { AgenteFinanceiroProvider } from "../contexts/AgenteFinanceiroContext";
+import AgenteFinanceiro from "../Pages/AgenteFinanceiro/AgenteFinanceiro";
 
 const AppRoutes: React.FC = () => {
   return (
@@ -125,6 +127,16 @@ const AppRoutes: React.FC = () => {
                 <CategoriaProvider>
                   <Categoria />
                 </CategoriaProvider>
+              }
+            />
+
+            {/* Rotas de Contas */}
+            <Route
+              path="contas"
+              element={
+                <AgenteFinanceiroProvider>
+                  <AgenteFinanceiro />
+                </AgenteFinanceiroProvider>
               }
             />
 
