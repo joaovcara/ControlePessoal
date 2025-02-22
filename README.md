@@ -6,10 +6,10 @@ Este é um sistema de controle pessoal de receitas e despesas, desenvolvido para
 
 O sistema permite ao usuário registrar suas receitas e despesas, categorizá-las e visualizar relatórios de forma simples e intuitiva. A aplicação tem como objetivo proporcionar um controle fácil e eficiente das finanças pessoais, oferecendo uma visão clara do saldo e do histórico de transações.
 
-<img alt="CSharp" src="https://github.com/joaovcara/ControlePessoal/blob/main/image/project/web-login.png?raw=true" height="auto"/>
-<img alt="CSharp" src="https://github.com/joaovcara/ControlePessoal/blob/main/image/project/web-dashboard.png?raw=true" height="auto"/>
-<img alt="CSharp" src="https://github.com/joaovcara/ControlePessoal/blob/main/image/project/web-categoria.png?raw=true" height="auto"/>
-<img alt="CSharp" src="https://github.com/joaovcara/ControlePessoal/blob/main/image/project/web-despesa.png?raw=true" height="auto"/>
+<img alt="sistema" src="https://github.com/joaovcara/ControlePessoal/blob/main/image/project/web-login.png?raw=true" height="auto"/>
+<img alt="sistema" src="https://github.com/joaovcara/ControlePessoal/blob/main/image/project/web-dashboard.png?raw=true" height="auto"/>
+<img alt="sistema" src="https://github.com/joaovcara/ControlePessoal/blob/main/image/project/web-categoria.png?raw=true" height="auto"/>
+<img alt="sistema" src="https://github.com/joaovcara/ControlePessoal/blob/main/image/project/web-despesa.png?raw=true" height="auto"/>
 
 ### Funcionalidades principais:
 - Registro de receitas e despesas.
@@ -20,14 +20,14 @@ O sistema permite ao usuário registrar suas receitas e despesas, categorizá-la
 
 ## Stacks
 ### Backend:
-<img alt="CSharp" src="https://github.com/joaovcara/ControlePessoal/blob/main/image/project/csharp.png?raw=true" height="85px"/>  **.NET 8.0**: Framework utilizado para criar a API RESTful.
+<img alt="CSharp" src="https://github.com/joaovcara/ControlePessoal/blob/main/image/project/csharp.png?raw=true" height="auto" width="100px"/>  **.NET 8.0**: Framework utilizado para criar a API RESTful.
 
-<img alt="sql" src="https://github.com/joaovcara/ControlePessoal/blob/main/image/project/sql.png?raw=true" height="85px"/>  **SQL Server**: Banco de dados utilizado para armazenar as informações do usuário, receitas e despesas.
+<img alt="sql" src="https://github.com/joaovcara/ControlePessoal/blob/main/image/project/sql.png?raw=true" height="auto" width="100px"/>  **SQL Server**: Banco de dados utilizado para armazenar as informações do usuário, receitas e despesas.
 
 ### Frontend:
-<img alt="react" src="https://github.com/joaovcara/ControlePessoal/blob/main/image/project/react.png?raw=true" height="85px"/>  **React**: Biblioteca JavaScript para construir interfaces de usuário dinâmicas.
+<img alt="react" src="https://github.com/joaovcara/ControlePessoal/blob/main/image/project/react.png?raw=true" height="auto" width="100px"/>  **React**: Biblioteca JavaScript para construir interfaces de usuário dinâmicas.
 
-<img alt="antd" src="https://github.com/joaovcara/ControlePessoal/blob/main/image/project/antd.png?raw=true" height="85px"/>  **Ant Design**: Biblioteca de componentes React para criar interfaces de usuário modernas e responsivas.
+<img alt="antd" src="https://github.com/joaovcara/ControlePessoal/blob/main/image/project/antd.png?raw=true" height="auto" width="100px"/>  **Ant Design**: Biblioteca de componentes React para criar interfaces de usuário modernas e responsivas.
 
 ### Ferramentas e tecnologias adicionais:
 - **Axios**: Para realizar requisições HTTP entre o frontend e o backend.
