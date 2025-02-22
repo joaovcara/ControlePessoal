@@ -3,15 +3,15 @@ BEGIN
     CREATE TABLE AgenteFinanceiro (
         Id                     INT PRIMARY KEY IDENTITY(1,1),
         Descricao              VARCHAR(200) NOT NULL,
-        TipoAgenteFinanceiroId INT NOT NULL,
-        BancoId                INT,
+        IdTipoAgenteFinanceiro INT NOT NULL,
+        IdBanco                INT,
         Agencia                INT,
         DigitoAgencia          INT,
         Conta                  INT,
         DigitoConta            INT,
         ComputaSaldo           BIT
 
-        CONSTRAINT FK_AgenteFinanceiro_TipoAgenteFinanceiro FOREIGN KEY (TipoAgenteFinanceiroId) REFERENCES TipoAgenteFinanceiro(Id),
-        CONSTRAINT FK_AgenteFinanceiro_Banco FOREIGN KEY (BancoId) REFERENCES Banco(Id)
+        CONSTRAINT FK_AgenteFinanceiro_TipoAgenteFinanceiro FOREIGN KEY (IdTipoAgenteFinanceiro) REFERENCES TipoAgenteFinanceiro(Id),
+        CONSTRAINT FK_AgenteFinanceiro_Banco FOREIGN KEY (IdBanco) REFERENCES Banco(Id)
     );
 END;

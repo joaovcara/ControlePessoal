@@ -22,8 +22,8 @@ namespace Core.V1.Financeiro.AgenteFinanceiro.Repositories
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                var sql = $@"INSERT INTO {_databaseName} (Descricao, TipoAgenteFinanceiroId, BancoId, Agencia, DigitoAgencia, Conta, DigitoConta, ComputaSaldo)
-                             VALUES (@Descricao, @TipoAgenteFinanceiroId, @BancoId, @Agencia, @DigitoAgencia, @Conta, @DigitoConta, @ComputaSaldo)";
+                var sql = $@"INSERT INTO {_databaseName} (Descricao, IdTipoAgenteFinanceiro, IdBanco, Agencia, DigitoAgencia, Conta, DigitoConta, ComputaSaldo)
+                             VALUES (@Descricao, @IdTipoAgenteFinanceiro, @IdBanco, @Agencia, @DigitoAgencia, @Conta, @DigitoConta, @ComputaSaldo)";
                 return await db.ExecuteAsync(sql, agenteFinanceiro);
             }
         }
@@ -34,15 +34,27 @@ namespace Core.V1.Financeiro.AgenteFinanceiro.Repositories
             {
                 var sql = $@"UPDATE {_databaseName} 
                              SET Descricao = @Descricao,
-                                 TipoAgenteFinanceiroId = @TipoAgenteFinanceiroId,
-                                 BancoId = @BancoId,
+                                 IdTipoAgenteFinanceiro = @IdTipoAgenteFinanceiro,
+                                 IdBanco = @IdBanco,
                                  Agencia = @Agencia,
                                  DigitoAgencia = @DigitoAgencia,
                                  Conta = @Conta,
                                  DigitoConta = @DigitoConta,
                                  ComputaSaldo = @ComputaSaldo
                              WHERE Id = @Id";
-                return await db.ExecuteAsync(sql, new { agenteFinanceiro.Descricao, agenteFinanceiro.TipoAgenteFinanceiroId, agenteFinanceiro.BancoId, agenteFinanceiro.Agencia, agenteFinanceiro.DigitoAgencia, agenteFinanceiro.Conta, agenteFinanceiro.DigitoConta, agenteFinanceiro.ComputaSaldo, Id = id });
+                return await db.ExecuteAsync(sql,
+                    new
+                    {
+                        agenteFinanceiro.Descricao,
+                        agenteFinanceiro.IdTipoAgenteFinanceiro,
+                        agenteFinanceiro.IdBanco,
+                        agenteFinanceiro.Agencia,
+                        agenteFinanceiro.DigitoAgencia,
+                        agenteFinanceiro.Conta,
+                        agenteFinanceiro.DigitoConta,
+                        agenteFinanceiro.ComputaSaldo,
+                        Id = id
+                    });
             }
         }
 
@@ -73,8 +85,22 @@ namespace Core.V1.Financeiro.AgenteFinanceiro.Repositories
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                var sql = $@"SELECT * FROM {_databaseName}";
+                var sql = $@"SELECT dbo.AgenteFinanceiro.*,
+                                    dbo.Banco.Descricao AS BancoDescricao,
+                                    dbo.Banco.NMLogo    AS BancoLogo,
+                                    dbo.Banco.Cor       AS BancoCor
+                             FROM {_databaseName}
+                             LEFT JOIN dbo.Banco ON dbo.Banco.Id = dbo.AgenteFinanceiro.IdBanco";
                 return await db.QueryAsync<AgenteFinanceiroModel>(sql);
+            }
+        }
+
+        public async Task<IEnumerable<BancooModel>> GetBancoAsync()
+        {
+            using (IDbConnection db = new SqlConnection(_connectionString))
+            {
+                var sql = $@"SELECT * FROM dbo.Banco";
+                return await db.QueryAsync<BancooModel>(sql);
             }
         }
     }
