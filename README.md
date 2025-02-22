@@ -14,14 +14,15 @@ O sistema permite ao usuário registrar suas receitas e despesas, categorizá-la
 - Responsividade para uso em dispositivos móveis e desktop.
 
 ## Stacks
-
 ### Backend:
-- **.NET 8.0**: Framework utilizado para criar a API RESTful.
-- **SQL Server**: Banco de dados utilizado para armazenar as informações do usuário, receitas e despesas.
+<img alt="CSharp" src="https://github.com/joaovcara/ControlePessoal/image/project/csharp.png?raw=true" height="85px"/>  **.NET 8.0**: Framework utilizado para criar a API RESTful.
+
+<img alt="CSharp" src="https://github.com/joaovcara/ControlePessoal/image/project/sql.png?raw=true" height="85px"/>  **SQL Server**: Banco de dados utilizado para armazenar as informações do usuário, receitas e despesas.
 
 ### Frontend:
-- **React**: Biblioteca JavaScript para construir interfaces de usuário dinâmicas.
-- **Ant Design**: Biblioteca de componentes React para criar interfaces de usuário modernas e responsivas.
+<img alt="CSharp" src="https://github.com/joaovcara/ControlePessoal/image/project/react.png?raw=true" height="85px"/>  **React**: Biblioteca JavaScript para construir interfaces de usuário dinâmicas.
+
+<img alt="CSharp" src="https://github.com/joaovcara/ControlePessoal/image/project/antd.png?raw=true" height="85px"/>  **Ant Design**: Biblioteca de componentes React para criar interfaces de usuário modernas e responsivas.
 
 ### Ferramentas e tecnologias adicionais:
 - **Axios**: Para realizar requisições HTTP entre o frontend e o backend.
@@ -54,5 +55,3 @@ O sistema permite ao usuário registrar suas receitas e despesas, categorizá-la
    npm install
    npm start
 
-## Licença
-Este projeto está licenciado sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
