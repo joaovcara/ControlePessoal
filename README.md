@@ -6,6 +6,11 @@ Este é um sistema de controle pessoal de receitas e despesas, desenvolvido para
 
 O sistema permite ao usuário registrar suas receitas e despesas, categorizá-las e visualizar relatórios de forma simples e intuitiva. A aplicação tem como objetivo proporcionar um controle fácil e eficiente das finanças pessoais, oferecendo uma visão clara do saldo e do histórico de transações.
 
+<img alt="CSharp" src="https://github.com/joaovcara/ControlePessoal/blob/main/image/project/web-login.png?raw=true" height="auto"/>
+<img alt="CSharp" src="https://github.com/joaovcara/ControlePessoal/blob/main/image/project/web-dashboard.png?raw=true" height="auto"/>
+<img alt="CSharp" src="https://github.com/joaovcara/ControlePessoal/blob/main/image/project/web-categoria.png?raw=true" height="auto"/>
+<img alt="CSharp" src="https://github.com/joaovcara/ControlePessoal/blob/main/image/project/web-despesa.png?raw=true" height="auto"/>
+
 ### Funcionalidades principais:
 - Registro de receitas e despesas.
 - Visualização de registros por categorias.
