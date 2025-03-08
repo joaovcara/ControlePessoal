@@ -14,4 +14,4 @@ BEGIN
         CONSTRAINT FK_Conta_TipoConta FOREIGN KEY (IdTipoConta) REFERENCES TipoAgenteFinanceiro(Id),
         CONSTRAINT FK_Conta_Banco FOREIGN KEY (IdBanco) REFERENCES Banco(Id)
     );
-END;a
+END;
