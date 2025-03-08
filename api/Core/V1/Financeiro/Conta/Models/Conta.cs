@@ -1,10 +1,10 @@
-namespace Core.V1.Financeiro.AgenteFinanceiro.Models
+namespace Core.V1.Financeiro.Conta.Models
 {
-    public class AgenteFinanceiroModel
+    public class ContaModel
     {
         public int Id { get; set; }
         public string Descricao { get; set; } = string.Empty;
-        public int IdTipoAgenteFinanceiro { get; set; }
+        public int IdTipoConta { get; set; }
         public int? IdBanco { get; set; }
         public string BancoDescricao { get; set; } = string.Empty;
         public string BancoLogo { get; set; } = string.Empty;

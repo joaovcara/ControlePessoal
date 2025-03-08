@@ -25,10 +25,10 @@ namespace Core.V1.Financeiro.Banco.Repositories
             {
                 var sql = $@"INSERT INTO {_databaseName} (Codigo,
                                                           Descricao, 
-                                                          NMLogo)
+                                                          Cor)
                                   VALUES (@Codigo,
                                           @Descricao, 
-                                          @NMLogo)";
+                                          @Cor)";
                 return await db.ExecuteAsync(sql, banco);
             }
         }
@@ -40,7 +40,7 @@ namespace Core.V1.Financeiro.Banco.Repositories
                 var sql = $@"UPDATE {_databaseName} 
                                 SET Codigo = @Codigo, 
                                     Descricao = @Descricao,
-                                    NMLogo = @NMLogo
+                                    Cor = @Cor
                               WHERE Id = @Id";
                 return await db.ExecuteAsync(sql, banco);
             }

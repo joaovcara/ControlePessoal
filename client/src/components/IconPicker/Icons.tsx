@@ -29,6 +29,7 @@ import {
     ChurchOutlined,
     ShoppingCartOutlined,
     PaymentOutlined,
+    AccountBalanceWalletOutlined
   } from "@mui/icons-material";
 
 export const Icons: { [key: string]: JSX.Element } = {
@@ -62,4 +63,5 @@ export const Icons: { [key: string]: JSX.Element } = {
   "Igreja": <ChurchOutlined fontSize="small" />,
   "Carrinho": <ShoppingCartOutlined fontSize="small" />,
   "Cartão": <PaymentOutlined fontSize="small" />,
+  "Carteira": <AccountBalanceWalletOutlined fontSize="small" />,
 };

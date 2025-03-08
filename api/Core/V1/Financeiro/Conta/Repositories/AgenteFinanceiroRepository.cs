@@ -2,39 +2,40 @@ using System.Data;
 using System.Data.SqlClient;
 using Dapper;
 using Microsoft.Extensions.Configuration;
-using Core.V1.Financeiro.AgenteFinanceiro.Models;
-using Core.V1.Financeiro.AgenteFinanceiro.Interfaces.Repositories;
+using Core.V1.Financeiro.Conta.Models;
+using Core.V1.Financeiro.Conta.Interfaces.Repositories;
+using Core.V1.Financeiro.Banco.Models;
 
-namespace Core.V1.Financeiro.AgenteFinanceiro.Repositories
+namespace Core.V1.Financeiro.Conta.Repositories
 {
-    public class AgenteFinanceiroRepository : IAgenteFinanceiroRepository
+    public class ContaRepository : IContaRepository
     {
         private readonly string _connectionString;
-        const string _databaseName = "dbo.AgenteFinanceiro";
+        const string _databaseName = "dbo.Conta";
 
-        public AgenteFinanceiroRepository(IConfiguration configuration)
+        public ContaRepository(IConfiguration configuration)
         {
             _connectionString = configuration?.GetConnectionString("DefaultConnection")
                 ?? throw new InvalidOperationException("A string de conexão 'DefaultConnection' não foi encontrada ou está vazia nas configurações.");
         }
 
-        public async Task<int> AddAsync(AgenteFinanceiroModel agenteFinanceiro)
+        public async Task<int> AddAsync(ContaModel conta)
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                var sql = $@"INSERT INTO {_databaseName} (Descricao, IdTipoAgenteFinanceiro, IdBanco, Agencia, DigitoAgencia, Conta, DigitoConta, ComputaSaldo)
-                             VALUES (@Descricao, @IdTipoAgenteFinanceiro, @IdBanco, @Agencia, @DigitoAgencia, @Conta, @DigitoConta, @ComputaSaldo)";
-                return await db.ExecuteAsync(sql, agenteFinanceiro);
+                var sql = $@"INSERT INTO {_databaseName} (Descricao, IdTipoConta, IdBanco, Agencia, DigitoAgencia, Conta, DigitoConta, ComputaSaldo)
+                             VALUES (@Descricao, @IdTipoConta, @IdBanco, @Agencia, @DigitoAgencia, @Conta, @DigitoConta, @ComputaSaldo)";
+                return await db.ExecuteAsync(sql, conta);
             }
         }
 
-        public async Task<int> UpdateAsync(int id, AgenteFinanceiroModel agenteFinanceiro)
+        public async Task<int> UpdateAsync(int id, ContaModel conta)
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
                 var sql = $@"UPDATE {_databaseName} 
                              SET Descricao = @Descricao,
-                                 IdTipoAgenteFinanceiro = @IdTipoAgenteFinanceiro,
+                                 IdTipoConta = @IdTipoConta,
                                  IdBanco = @IdBanco,
                                  Agencia = @Agencia,
                                  DigitoAgencia = @DigitoAgencia,
@@ -45,14 +46,14 @@ namespace Core.V1.Financeiro.AgenteFinanceiro.Repositories
                 return await db.ExecuteAsync(sql,
                     new
                     {
-                        agenteFinanceiro.Descricao,
-                        agenteFinanceiro.IdTipoAgenteFinanceiro,
-                        agenteFinanceiro.IdBanco,
-                        agenteFinanceiro.Agencia,
-                        agenteFinanceiro.DigitoAgencia,
-                        agenteFinanceiro.Conta,
-                        agenteFinanceiro.DigitoConta,
-                        agenteFinanceiro.ComputaSaldo,
+                        conta.Descricao,
+                        conta.IdTipoConta,
+                        conta.IdBanco,
+                        conta.Agencia,
+                        conta.DigitoAgencia,
+                        conta.Conta,
+                        conta.DigitoConta,
+                        conta.ComputaSaldo,
                         Id = id
                     });
             }
@@ -67,12 +68,12 @@ namespace Core.V1.Financeiro.AgenteFinanceiro.Repositories
             }
         }
 
-        public async Task<AgenteFinanceiroModel> GetByIdAsync(int id)
+        public async Task<ContaModel> GetByIdAsync(int id)
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
                 var sql = $@"SELECT * FROM {_databaseName} WHERE Id = @Id";
-                var result = await db.QueryFirstOrDefaultAsync<AgenteFinanceiroModel>(sql, new { Id = id });
+                var result = await db.QueryFirstOrDefaultAsync<ContaModel>(sql, new { Id = id });
                 if (result == null)
                 {
                     throw new KeyNotFoundException($"Agente Financeiro com Id {id} não encontrado.");
@@ -81,26 +82,25 @@ namespace Core.V1.Financeiro.AgenteFinanceiro.Repositories
             }
         }
 
-        public async Task<IEnumerable<AgenteFinanceiroModel>> GetAllAsync()
+        public async Task<IEnumerable<ContaModel>> GetAllAsync()
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                var sql = $@"SELECT dbo.AgenteFinanceiro.*,
+                var sql = $@"SELECT dbo.Conta.*,
                                     dbo.Banco.Descricao AS BancoDescricao,
-                                    dbo.Banco.NMLogo    AS BancoLogo,
                                     dbo.Banco.Cor       AS BancoCor
                              FROM {_databaseName}
-                             LEFT JOIN dbo.Banco ON dbo.Banco.Id = dbo.AgenteFinanceiro.IdBanco";
-                return await db.QueryAsync<AgenteFinanceiroModel>(sql);
+                             LEFT JOIN dbo.Banco ON dbo.Banco.Id = dbo.Conta.IdBanco";
+                return await db.QueryAsync<ContaModel>(sql);
             }
         }
 
-        public async Task<IEnumerable<BancooModel>> GetBancoAsync()
+        public async Task<IEnumerable<BancoModel>> GetBancoAsync()
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
                 var sql = $@"SELECT * FROM dbo.Banco";
-                return await db.QueryAsync<BancooModel>(sql);
+                return await db.QueryAsync<BancoModel>(sql);
             }
         }
     }
