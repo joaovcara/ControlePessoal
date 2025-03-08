@@ -1,10 +1,9 @@
-export interface AgenteFinanceiroType {
+export interface ContaType {
   id?: number;
   descricao: string;
-  idTipoAgenteFinanceiro: number;
+  idTipoConta: number;
   idBanco: number;
   bancoDescricao: string;
-  bancoLogo: string;
   bancoCor: string;
   agencia: number;
   digitoAgencia: number;

@@ -1,8 +1,8 @@
 import { TableColumnsType } from "antd";
-import { AgenteFinanceiroType } from "../../Types/AgenteFinanceiroType";
+import { ContaType } from "../../Types/ContaType";
 import { Icons } from "../../components/IconPicker/Icons";
 
-const columns: TableColumnsType<AgenteFinanceiroType> = [
+const columns: TableColumnsType<ContaType> = [
   {
     title: "Id",
     dataIndex: "id",
@@ -18,35 +18,34 @@ const columns: TableColumnsType<AgenteFinanceiroType> = [
   },
   {
     title: "Tipo",
-    dataIndex: "idTipoAgenteFinanceiro",
+    dataIndex: "idTipoConta",
     width: "auto",
-    sorter: (a, b) => a.idTipoAgenteFinanceiro - b.idTipoAgenteFinanceiro,
-    render: (value) => (value == 1 ? "Carteira" : "Conta Bancária"),
-  },
-  {
-    title: "Banco",
-    dataIndex: "bancoDescricao",
-    width: "auto",
-    sorter: (a, b) => a.bancoDescricao.localeCompare(b.bancoDescricao),
-    render: (_, record) => (
+    sorter: (a, b) => a.idTipoConta - b.idTipoConta,
+    render: (value, record) => (
       <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
         <div
           style={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: record.bancoCor,
+            backgroundColor: value == 1 ? '#46100e' : record.bancoCor,
             width: "30px",
             height: "30px",
             borderRadius: "50%",
             color: "#fff"
           }}
         >
-          {record.bancoLogo ? Icons[record.bancoLogo] : null}
+          {value == 1 ? Icons["Carteira"] : Icons["Banco"]}
         </div>
-        {record.bancoDescricao}
+        {value == 1 ? "Carteira" : "Conta Bancária"}
       </div>
     ),
+  },
+  {
+    title: "Banco",
+    dataIndex: "bancoDescricao",
+    width: "auto",
+    sorter: (a, b) => a.bancoDescricao.localeCompare(b.bancoDescricao),
   },
   {
     title: "Agência",

@@ -10,29 +10,32 @@ import {
   Tooltip,
   Typography,
   Row,
-  Col,
+  Col
 } from "antd";
 import { ClearOutlined } from "@ant-design/icons";
-import { AgenteFinanceiroType } from "../../Types/AgenteFinanceiroType";
-import { useAgenteFinanceiro } from "../../contexts/AgenteFinanceiroContext";
+import { ContaType } from "../../Types/ContaType";
+import { useConta } from "../../contexts/ContaContext";
 import { BancoType } from "../../Types/BancoType";
+import { Icons } from "../../components/IconPicker/Icons";
 
 const { Text } = Typography;
 
-interface AgenteFinanceiroFormProps {
+interface ContaFormProps {
   onClose: () => void;
-  initialValues?: AgenteFinanceiroType;
+  initialValues?: ContaType;
 }
 
-const AgenteFinanceiroForm: React.FC<AgenteFinanceiroFormProps> = ({
+const ContaForm: React.FC<ContaFormProps> = ({
   onClose,
   initialValues,
 }) => {
-  const [form] = Form.useForm<AgenteFinanceiroType>();
-  const { create, update, getBancos } = useAgenteFinanceiro();
-  const [tipo, setTipo] = useState<number | undefined>(initialValues?.idTipoAgenteFinanceiro);
+  const [form] = Form.useForm<ContaType>();
+  const { create, update, getBancos } = useConta();
+  const [tipo, setTipo] = useState<number | undefined>(initialValues?.idTipoConta);
   const [bancos, setBancos] = useState<BancoType[]>([]);
+  const [corBanco, setCorBanco] = useState<string | undefined>(initialValues?.bancoCor);
 
+  console.log("initialValues", initialValues);
   useEffect(() => {
     const fetchCategorias = async () => {
       const bancos = await getBancos();
@@ -45,17 +48,26 @@ const AgenteFinanceiroForm: React.FC<AgenteFinanceiroFormProps> = ({
   useEffect(() => {
     if (initialValues) {
       form.setFieldsValue(initialValues);
-      setTipo(initialValues.idTipoAgenteFinanceiro);
+      setTipo(initialValues.idTipoConta);
+      setCorBanco(initialValues.bancoCor);
     } else {
       form.resetFields();
+      setCorBanco(undefined);
+      setTipo(undefined);
     }
   }, [initialValues, form]);
 
-  const onSubmit: FormProps<AgenteFinanceiroType>["onFinish"] = async (values) => {
+  useEffect(() => {
+    if (tipo === 1) {
+      setCorBanco("");
+    }
+  }, [tipo]);
+
+  const onSubmit: FormProps<ContaType>["onFinish"] = async (values) => {
     let valid = true;
 
     try {
-      await form.validateFields(["descricao", "idTipoAgenteFinanceiro"]);
+      await form.validateFields(["descricao", "idTipoConta"]);
     } catch (error) {
       valid = false;
     }
@@ -68,13 +80,17 @@ const AgenteFinanceiroForm: React.FC<AgenteFinanceiroFormProps> = ({
 
     if (success) {
       form.resetFields();
+      setCorBanco(undefined);
       onClose();
     }
   };
 
   const handleLimpar = () => {
     form.resetFields();
+    setCorBanco(undefined);
   };
+
+  console.log("ContaForm.tsx", tipo); 
 
   return (
     <Form
@@ -87,21 +103,48 @@ const AgenteFinanceiroForm: React.FC<AgenteFinanceiroFormProps> = ({
         width: "100%",
       }}
     >
-      <Form.Item<AgenteFinanceiroType> label="Descrição" name="descricao" rules={[{ required: true, message: "Digite a descrição!" }]} required={false}>
+      <Form.Item<ContaType> label="Descrição" name="descricao" rules={[{ required: true, message: "Digite a descrição!" }]} required={false}>
         <Input placeholder="Descrição da conta" />
       </Form.Item>
 
-      <Form.Item<AgenteFinanceiroType> label="Tipo" name="idTipoAgenteFinanceiro" rules={[{ required: true, message: "Selecione o tipo!" }]} required={false}>
-        <Select placeholder="Selecione um tipo" onChange={(value) => setTipo(value)}>
-          <Select.Option value={1}>Carteira</Select.Option>
-          <Select.Option value={2}>Banco</Select.Option>
-        </Select>
-      </Form.Item>
+      <Row gutter={16}>
+        <Col span={2}>
+          <Form.Item<ContaType> label=" " name="bancoCor" style={{ marginBottom: 0 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: tipo === 1 ? "#46100e" : corBanco,
+                  width: "30px",
+                  height: "30px",
+                  borderRadius: "50%",
+                  color: "#fff"
+                }}
+              >
+                {tipo === 1 ? Icons["Carteira"] : tipo === 2 ? Icons["Banco"] : null}
+              </div>
+            </div>
+          </Form.Item>
+        </Col>
+        <Col span={22}>
+          <Form.Item<ContaType> label="Tipo" name="idTipoConta" rules={[{ required: true, message: "Selecione o tipo!" }]} required={false}>
+            <Select placeholder="Selecione um tipo" onChange={(value) => setTipo(value)}>
+              <Select.Option value={1}>Carteira</Select.Option>
+              <Select.Option value={2}>Banco</Select.Option>
+            </Select>
+          </Form.Item>
+        </Col>
+      </Row>
 
       {tipo === 2 && (
         <>
-          <Form.Item<AgenteFinanceiroType> label="Banco" name="idBanco">
-            <Select placeholder="Selecione um banco">
+          <Form.Item<ContaType> label="Banco" name="idBanco">
+            <Select placeholder="Selecione um banco" onChange={(value) => {
+              const selectedBanco = bancos.find(banco => banco.id === value);
+              setCorBanco(selectedBanco?.cor);
+            }}>
               {bancos.map((banco) => (
                 <Select.Option key={banco.id} value={banco.id}>
                   {banco.descricao}
@@ -112,7 +155,7 @@ const AgenteFinanceiroForm: React.FC<AgenteFinanceiroFormProps> = ({
 
           <Row gutter={16}>
             <Col span={8}>
-              <Form.Item<AgenteFinanceiroType> label="Agência" name="agencia" required={false}>
+              <Form.Item<ContaType> label="Agência" name="agencia" required={false}>
                 <Input placeholder="Agência" inputMode="numeric" pattern="[0-9]*" onKeyPress={(event) => {
                   if (!/[0-9]/.test(event.key)) {
                     event.preventDefault();
@@ -121,7 +164,7 @@ const AgenteFinanceiroForm: React.FC<AgenteFinanceiroFormProps> = ({
               </Form.Item>
             </Col>
             <Col span={4}>
-              <Form.Item<AgenteFinanceiroType> label=" " name="digitoAgencia" required={false}>
+              <Form.Item<ContaType> label=" " name="digitoAgencia" required={false}>
                 <Input placeholder="Dígito" inputMode="numeric" pattern="[0-9]*" onKeyPress={(event) => {
                   if (!/[0-9]/.test(event.key)) {
                     event.preventDefault();
@@ -130,7 +173,7 @@ const AgenteFinanceiroForm: React.FC<AgenteFinanceiroFormProps> = ({
               </Form.Item>
             </Col>
             <Col span={8}>
-              <Form.Item<AgenteFinanceiroType> label="Conta" name="conta" required={false}>
+              <Form.Item<ContaType> label="Conta" name="conta" required={false}>
                 <Input placeholder="Conta" inputMode="numeric" pattern="[0-9]*" onKeyPress={(event) => {
                   if (!/[0-9]/.test(event.key)) {
                     event.preventDefault();
@@ -139,7 +182,7 @@ const AgenteFinanceiroForm: React.FC<AgenteFinanceiroFormProps> = ({
               </Form.Item>
             </Col>
             <Col span={4}>
-              <Form.Item<AgenteFinanceiroType> label=" " name="digitoConta" required={false}>
+              <Form.Item<ContaType> label=" " name="digitoConta" required={false}>
                 <Input placeholder="Dígito" inputMode="numeric" pattern="[0-9]*" onKeyPress={(event) => {
                   if (!/[0-9]/.test(event.key)) {
                     event.preventDefault();
@@ -151,7 +194,7 @@ const AgenteFinanceiroForm: React.FC<AgenteFinanceiroFormProps> = ({
         </>
       )}
 
-      <Form.Item<AgenteFinanceiroType> name="computaSaldo" valuePropName="checked">
+      <Form.Item<ContaType> name="computaSaldo" valuePropName="checked">
         <Checkbox>Computa Saldo Tela Inicial?</Checkbox>
       </Form.Item>
 
@@ -184,4 +227,4 @@ const AgenteFinanceiroForm: React.FC<AgenteFinanceiroFormProps> = ({
   );
 };
 
-export default AgenteFinanceiroForm;
+export default ContaForm;
