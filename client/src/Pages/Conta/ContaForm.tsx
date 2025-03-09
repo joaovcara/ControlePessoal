@@ -90,8 +90,6 @@ const ContaForm: React.FC<ContaFormProps> = ({
     setCorBanco(undefined);
   };
 
-  console.log("ContaForm.tsx", tipo); 
-
   return (
     <Form
       form={form}

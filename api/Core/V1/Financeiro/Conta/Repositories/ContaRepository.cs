@@ -76,7 +76,7 @@ namespace Core.V1.Financeiro.Conta.Repositories
                 var result = await db.QueryFirstOrDefaultAsync<ContaModel>(sql, new { Id = id });
                 if (result == null)
                 {
-                    throw new KeyNotFoundException($"Agente Financeiro com Id {id} não encontrado.");
+                    throw new KeyNotFoundException($"Conta com Id {id} não encontrado.");
                 }
                 return result;
             }

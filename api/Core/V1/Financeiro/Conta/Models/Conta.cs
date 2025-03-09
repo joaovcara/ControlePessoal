@@ -7,7 +7,6 @@ namespace Core.V1.Financeiro.Conta.Models
         public int IdTipoConta { get; set; }
         public int? IdBanco { get; set; }
         public string BancoDescricao { get; set; } = string.Empty;
-        public string BancoLogo { get; set; } = string.Empty;
         public string BancoCor { get; set; } = string.Empty;
         public int? Agencia { get; set; }
         public int? DigitoAgencia { get; set; }
