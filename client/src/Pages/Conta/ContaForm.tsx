@@ -35,7 +35,6 @@ const ContaForm: React.FC<ContaFormProps> = ({
   const [bancos, setBancos] = useState<BancoType[]>([]);
   const [corBanco, setCorBanco] = useState<string | undefined>(initialValues?.bancoCor);
 
-  console.log("initialValues", initialValues);
   useEffect(() => {
     const fetchCategorias = async () => {
       const bancos = await getBancos();
@@ -118,7 +117,7 @@ const ContaForm: React.FC<ContaFormProps> = ({
                   width: "30px",
                   height: "30px",
                   borderRadius: "50%",
-                  color: "#fff"
+                  color: corBanco ? "#fff" : "inherit" 
                 }}
               >
                 {tipo === 1 ? Icons["Carteira"] : tipo === 2 ? Icons["Banco"] : null}
@@ -163,7 +162,7 @@ const ContaForm: React.FC<ContaFormProps> = ({
             </Col>
             <Col span={4}>
               <Form.Item<ContaType> label=" " name="digitoAgencia" required={false}>
-                <Input placeholder="Dígito" inputMode="numeric" pattern="[0-9]*" onKeyPress={(event) => {
+                <Input placeholder="Dígito" inputMode="numeric" maxLength={1} pattern="[0-9]*" onKeyPress={(event) => {
                   if (!/[0-9]/.test(event.key)) {
                     event.preventDefault();
                   }
@@ -181,7 +180,7 @@ const ContaForm: React.FC<ContaFormProps> = ({
             </Col>
             <Col span={4}>
               <Form.Item<ContaType> label=" " name="digitoConta" required={false}>
-                <Input placeholder="Dígito" inputMode="numeric" pattern="[0-9]*" onKeyPress={(event) => {
+                <Input placeholder="Dígito" inputMode="numeric" maxLength={1} pattern="[0-9]*" onKeyPress={(event) => {
                   if (!/[0-9]/.test(event.key)) {
                     event.preventDefault();
                   }
