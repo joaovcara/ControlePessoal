@@ -169,7 +169,7 @@ export default function DocumentoFinanceiro() {
 
   return (
     <>
-      <Row gutter={[16, 16]} justify="center" align="middle" style={{ marginBottom: 16 }}>
+      <Row gutter={[16, 16]} justify="center" align="middle" style={{ marginBottom: 16, overflow: "hidden", width: "100%" }}>
         <Col style={{ padding: 0 }}>
           <Button
             icon={<LeftOutlined />}
