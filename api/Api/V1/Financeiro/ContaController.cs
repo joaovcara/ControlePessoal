@@ -20,6 +20,14 @@ namespace Api.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> Create(ContaModel conta)
         {
+            var userIdClaim = User.FindFirst("Id");
+            if (userIdClaim == null)
+            {
+                return Unauthorized("Usuário não autenticado.");
+            }
+            var usuarioId = int.Parse(userIdClaim.Value);
+
+            conta.UsuarioId = usuarioId;
             await _contaService.AddAsync(conta);
             return Ok(new { message = "Conta cadastrada com sucesso!" });
         }
@@ -27,6 +35,14 @@ namespace Api.Controllers
         [HttpPut("update/{id}")]
         public async Task<IActionResult> Update(int id, ContaModel conta)
         {
+            var userIdClaim = User.FindFirst("Id");
+            if (userIdClaim == null)
+            {
+                return Unauthorized("Usuário não autenticado.");
+            }
+            var usuarioId = int.Parse(userIdClaim.Value);
+
+            conta.UsuarioId = usuarioId;
             if (id == 0)
                 return BadRequest("Informe um Id de Conta válido.");
 
@@ -44,7 +60,14 @@ namespace Api.Controllers
         [HttpGet("getAll")]
         public async Task<IActionResult> GetAll()
         {
-            var contas = await _contaService.GetAllAsync();
+            var userIdClaim = User.FindFirst("Id");
+            if (userIdClaim == null)
+            {
+                return Unauthorized("Usuário não autenticado.");
+            }
+            var usuarioId = int.Parse(userIdClaim.Value);
+
+            var contas = await _contaService.GetAllAsync(usuarioId);
             return Ok(contas);
         }
 

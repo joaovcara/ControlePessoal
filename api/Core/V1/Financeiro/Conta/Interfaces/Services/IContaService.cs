@@ -9,7 +9,8 @@ namespace Core.V1.Financeiro.Conta.Interfaces.Services
         Task<int> UpdateAsync(int id, ContaModel conta);
         Task<int> DeleteAsync(int id);
         Task<ContaModel> GetByIdAsync(int id);
-        Task<IEnumerable<ContaModel>> GetAllAsync();
+        Task<IEnumerable<ContaModel>> GetAllAsync(int usuarioId);
         Task<IEnumerable<BancoModel>> GetBancosAsync();
+        Task<IEnumerable<ContaModel>> GetByUsuarioIdAsync(int usuarioId);
     }
 }
