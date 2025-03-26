@@ -34,14 +34,19 @@ namespace Core.V1.Financeiro.Conta.Services
             return await _contaRepository.GetByIdAsync(id);
         }
 
-        public async Task<IEnumerable<ContaModel>> GetAllAsync()
+        public async Task<IEnumerable<ContaModel>> GetAllAsync(int usuarioId)
         {
-            return await _contaRepository.GetAllAsync();
+            return await _contaRepository.GetAllAsync(usuarioId);
         }
 
         public async Task<IEnumerable<BancoModel>> GetBancosAsync()
         {
             return await _contaRepository.GetBancoAsync();
+        }
+
+        public async Task<IEnumerable<ContaModel>> GetByUsuarioIdAsync(int usuarioId)
+        {
+            return await _contaRepository.GetByUsuarioIdAsync(usuarioId);
         }
     }
 }

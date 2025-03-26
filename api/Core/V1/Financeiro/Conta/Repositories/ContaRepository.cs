@@ -23,8 +23,8 @@ namespace Core.V1.Financeiro.Conta.Repositories
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                var sql = $@"INSERT INTO {_databaseName} (Descricao, IdTipoConta, IdBanco, Agencia, DigitoAgencia, Conta, DigitoConta, ComputaSaldo)
-                             VALUES (@Descricao, @IdTipoConta, @IdBanco, @Agencia, @DigitoAgencia, @Conta, @DigitoConta, @ComputaSaldo)";
+                var sql = $@"INSERT INTO {_databaseName} (Descricao, IdTipoConta, IdBanco, Agencia, DigitoAgencia, Conta, DigitoConta, ComputaSaldo, UsuarioId)
+                             VALUES (@Descricao, @IdTipoConta, @IdBanco, @Agencia, @DigitoAgencia, @Conta, @DigitoConta, @ComputaSaldo, @UsuarioId)";
                 return await db.ExecuteAsync(sql, conta);
             }
         }
@@ -41,7 +41,8 @@ namespace Core.V1.Financeiro.Conta.Repositories
                                  DigitoAgencia = @DigitoAgencia,
                                  Conta = @Conta,
                                  DigitoConta = @DigitoConta,
-                                 ComputaSaldo = @ComputaSaldo
+                                 ComputaSaldo = @ComputaSaldo,
+                                 UsuarioId = @UsuarioId
                              WHERE Id = @Id";
                 return await db.ExecuteAsync(sql,
                     new
@@ -82,7 +83,7 @@ namespace Core.V1.Financeiro.Conta.Repositories
             }
         }
 
-        public async Task<IEnumerable<ContaModel>> GetAllAsync()
+        public async Task<IEnumerable<ContaModel>> GetAllAsync(int usuarioId)
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
@@ -90,8 +91,9 @@ namespace Core.V1.Financeiro.Conta.Repositories
                                     dbo.Banco.Descricao AS BancoDescricao,
                                     dbo.Banco.Cor       AS BancoCor
                              FROM {_databaseName}
-                             LEFT JOIN dbo.Banco ON dbo.Banco.Id = dbo.Conta.IdBanco";
-                return await db.QueryAsync<ContaModel>(sql);
+                             LEFT JOIN dbo.Banco ON dbo.Banco.Id = dbo.Conta.IdBanco
+                             WHERE UsuarioId = @UsuarioId";
+                return await db.QueryAsync<ContaModel>(sql, new { UsuarioId = usuarioId });
             }
         }
 
@@ -101,6 +103,20 @@ namespace Core.V1.Financeiro.Conta.Repositories
             {
                 var sql = $@"SELECT * FROM dbo.Banco";
                 return await db.QueryAsync<BancoModel>(sql);
+            }
+        }
+
+        public async Task<IEnumerable<ContaModel>> GetByUsuarioIdAsync(int usuarioId)
+        {
+            using (IDbConnection db = new SqlConnection(_connectionString))
+            {
+                var sql = $@"SELECT dbo.Conta.*,
+                                    dbo.Banco.Descricao AS BancoDescricao,
+                                    dbo.Banco.Cor       AS BancoCor
+                             FROM {_databaseName}
+                             LEFT JOIN dbo.Banco ON dbo.Banco.Id = dbo.Conta.IdBanco
+                             WHERE UsuarioId = @UsuarioId";
+                return await db.QueryAsync<ContaModel>(sql, new { UsuarioId = usuarioId });
             }
         }
     }

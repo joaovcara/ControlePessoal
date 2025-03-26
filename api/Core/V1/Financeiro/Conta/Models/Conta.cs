@@ -1,3 +1,5 @@
+using Core.V1.Cadastros.Usuario.Models;
+
 namespace Core.V1.Financeiro.Conta.Models
 {
     public class ContaModel
@@ -13,5 +15,6 @@ namespace Core.V1.Financeiro.Conta.Models
         public int? Conta { get; set; }
         public int? DigitoConta { get; set; }
         public bool ComputaSaldo { get; set; }
+        public int UsuarioId { get; set; }
     }
 }
