@@ -58,5 +58,5 @@ O sistema permite ao usuário registrar suas receitas e despesas, categorizá-la
 5. Instale as dependências e execute a aplicação:
    ```bash
    npm install
-   npm start
+   npm run dev
 
