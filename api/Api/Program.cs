@@ -104,13 +104,21 @@ else
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+// Ler configurações do Swagger
+var swaggerSettings = builder.Configuration.GetSection("SwaggerSettings");
+bool enableSwagger = swaggerSettings.GetValue<bool>("Enable");
+string routePrefix = swaggerSettings.GetValue<string>("RoutePrefix") ?? "swagger";
+string title = swaggerSettings.GetValue<string>("Title") ?? "API Documentation";
+string version = swaggerSettings.GetValue<string>("Version") ?? "v1";
+
+// 🌐 Middleware pipeline // Habilitar o Swagger com base nas configurações
+if (enableSwagger)
 {
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Api v1");
-        c.RoutePrefix = string.Empty; // Define o Swagger na raiz do aplicativo
+        c.SwaggerEndpoint($"/{routePrefix}/{version}/swagger.json", $"{title} {version}");
+        c.RoutePrefix = routePrefix; // Define o prefixo da rota
     });
 }
 
